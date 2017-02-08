@@ -1,0 +1,51 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="WEB-INF/template/main.xhtml">
+  <ui:define name="header-title">
+    <h1>BROCHUREFORCE</h1>
+  </ui:define>
+
+  <ui:define name="content">
+    <c:if test="false">
+      THIS STATEMENT WILL PREVENT ALL THIS CONTENT
+      TO BE RENDERED BY THE JSF SERVLET.
+      <!--
+      <h:form>
+        <h:outputText id="lastVisit" value="#{jsfbExample.currentVisit}" /><br/>
+        <h:commandButton value="New visit!"
+          actionListener="#{jsfbExample.insertVisit()}">
+          <f:ajax execute="@this" render="pageVisitsList" />
+        </h:commandButton>
+        <h:commandButton value="Last inserted visit!">
+          <f:ajax execute="@this" render="lastVisit" />
+        </h:commandButton>
+        <h:panelGrid id="pageVisitsList">
+          <c:forEach var="visit" items="#{jsfbExample.pageVisits}">
+            <h:outputText value="#{visit.toString()}" />
+          </c:forEach>
+        </h:panelGrid>
+      </h:form>
+      -->
+    </c:if>
+    <h:form id="loginForm">
+      <div data-role="fieldcontain">
+        <h:selectOneMenu id="profileType" value="#{jsfbSession.profileType}">
+          <f:selectItems value="#{jsfbSession.profileTypesList}" var="opt" 
+                         itemValue="#{opt.toString()}" itemLabel="#{opt.description}" />
+        </h:selectOneMenu>
+      </div>
+      <div data-role="fieldcontain">
+        <h:inputText id="companyId" value="#{jsfbSession.companyId}" />
+        <h:inputText id="userId" value="#{jsfbSession.userId}" style="display: none;" />
+        <h:inputSecret id="userPwd" value="#{jsfbSession.password}" />
+      </div>
+      <h:commandButton value="LOGIN" action="#{jsfbSession.fireLogin()}" />
+    </h:form>
+    <script type="text/javascript" src="#{application.contextPath}/js/index.js"></script>
+  </ui:define>
+
+  <ui:define name="footer-title">By LIA Solutions SAS</ui:define>
+</ui:composition>

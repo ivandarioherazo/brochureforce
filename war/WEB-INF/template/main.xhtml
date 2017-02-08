@@ -1,0 +1,33 @@
+<!DOCTYPE html 
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <h:head id="head">
+    <title>BrochureForce - Your virtual store.</title>
+    <!-- Responsive design -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="#{application.contextPath}/css/main.css" />
+    <link rel="stylesheet" href="#{application.contextPath}/css/jqmobile/themes/BusinessColors.min.css" />
+    <link rel="stylesheet" href="#{application.contextPath}/css/jqmobile/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="#{application.contextPath}/css/jqmobile/jquery.mobile.structure-1.4.5.min.css" />
+    <script type="text/javascript" src="#{application.contextPath}/js/jqmobile/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="#{application.contextPath}/js/jqmobile/jquery.mobile-1.4.5.min.js"></script>
+    <script type="text/javascript" src="#{application.contextPath}/js/inheritance.js"></script>
+    <script type="text/javascript" src="#{application.contextPath}/js/EventRegistry.js"></script>
+  </h:head>
+  <h:body id="body">
+    <section id="templateSection" data-role="page">
+      <header data-role="header">
+        <ui:insert name="header-title" />
+      </header>
+      <article data-role="content">
+        <ui:insert name="content" />
+      </article>
+      <footer data-role="footer">
+        <ui:insert name="footer-title" />
+      </footer>
+    </section>
+  </h:body>
+</html>
