@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
+                template="WEB-INF/template/main.xhtml">
+  <ui:define name="header-title">
+    <h1>BROCHUREFORCE</h1>
+  </ui:define>
+
+  <ui:define name="content">
+    Login ok. Redirecting to dashboard:
+    <c:set var="profileType" scope="session" value="${jsfbSession.loggedUserProfileType}"/>
+    <c:choose>
+      <c:when test="${profileType.equals('COMPANY')}">
+        window.location.replace("#{application.contextPath}/dashboard/company.jsf");
+      </c:when>
+      <c:when test="${profileType.equals('CLIENT')}">
+        window.location.replace("#{application.contextPath}/dashboard/client.jsf");
+      </c:when>
+      <c:when test="${profileType.equals('SELLER_COMPANY')}">
+        window.location.replace("#{application.contextPath}/dashboard/seller.jsf");
+      </c:when>
+    </c:choose>
+  </ui:define>
+  
+  <ui:define name="footer-title">
+    <h1>By LIA Solutions SAS</h1>
+  </ui:define>
+</ui:composition>

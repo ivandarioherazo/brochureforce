@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+    <display-name>BrochureForce</display-name>
+    <description>Purchase orders generator configured to run on the Google AppEngine.</description>
+    <context-param>
+        <description>Project stage (Development or Production)</description>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Development</param-value>
+    </context-param>
+    <context-param>
+        <description>
+      Designate client-side state saving, since GAE doesn't handle 
+      server side (JSF default) state management.
+    </description>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
+    </context-param>
+    <context-param>
+        <description>Sets the default suffix for JSF pages to .xhtml</description>
+        <param-name>javax.faces.DEFAULT_SUFFIX</param-name>
+        <param-value>.xhtml</param-value>
+    </context-param>
+    <context-param>
+        <description>
+      When enabled, the runtime initialization and default ResourceHandler 
+      implementation will use threads to perform their functions. Set this 
+      value to false if threads aren't desired (as in the case of single-threaded
+      environments such as the Google AppEngine).
+      Note that when this option is disabled, the ResourceHandler will not 
+      pick up new versions of resources when ProjectStage is development.
+    </description>
+        <param-name>com.sun.faces.enableThreading</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <context-param>
+        <description>Allows dependency-injection into ManagedBeans</description>
+        <param-name>com.sun.faces.injectionProvider</param-name>
+        <param-value>com.cloud.brochureforce.client.cdi.JSFInjectionProvider</param-value>
+    </context-param>
+    <context-param>
+        <description>Specify JBoss Expression Language Over Default</description>
+        <param-name>com.sun.faces.expressionFactory</param-name>
+        <param-value>org.jboss.el.ExpressionFactoryImpl</param-value>
+    </context-param>
+    <servlet>
+        <description>
+      JSF 2 Servlet. There's NO servlet-mapping defined for this servlet because
+      it's declared here in order to enforce the FacesFactory to load properly
+      so that an instance of this servlet can be injected in the FacesHttpServlet
+      used by Guice to serve JSF requests and as injection provider at the same time.
+      Furthermore, the "load-on-startup" property is set to "0" to tell the
+      Servlet Container that this servlet MUST be loaded first.
+    </description>
+        <servlet-name>JSF Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+    <listener>
+        <description>JSF Initialization.</description>
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class>
+    </listener>
+    <listener>
+        <description>PERSISTENCE ENGINE INITIALIZATION AND SHUTDOWN.</description>
+        <listener-class>com.cloud.brochureforce.client.listener.PersistenceManagerSetupListener</listener-class>
+    </listener>
+    <listener>
+        <description>Database session system shutdown listener</description>
+        <listener-class>com.cloud.brochureforce.client.listener.DBSessionSystemInitializationListener</listener-class>
+    </listener>
+    <listener>
+        <description>This listener closes a session in the database system.</description>
+        <listener-class>com.cloud.brochureforce.client.listener.DBSessionDestroyerListener</listener-class>
+    </listener>
+    <!-- ***** Specify session timeout of thirty (30) minutes. ***** -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>index.jsf</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
+    <!-- **************************************************** -->
+    <!-- DI API initialization (Google Guice Implementation). -->
+    <!-- **************************************************** -->
+    <filter>
+        <description>Google Guice filter which enables DI.</description>
+        <filter-name>GuiceFilter</filter-name>
+        <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>GuiceFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+    <listener>
+        <description>
+      This listener initializes the Guice injector and wraps the JSF Servlet
+      into a HttpServlet in order to serve JSF requests via Guice Filter.
+    </description>
+        <listener-class>com.cloud.brochureforce.client.cdi.listener.GuiceListener</listener-class>
+    </listener>
+    <!-- **************************************************** -->
+</web-app>

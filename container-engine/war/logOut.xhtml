@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="WEB-INF/templates/main.xhtml">
+  <ui:define name="header-title" />
+
+  <ui:define name="content">
+    Good bye! Now redirecting to login page...
+    <form id="logoutForm" onsubmit="window.location.replace('#{jsfbSession.fireLogOutEvent()}')">
+      <input type="submit" id="logoutBtn" style="display: none" />
+    </form>
+    <script type="text/javascript">
+      $(document).ready(function (evt) {
+        $$("logoutBtn").submit();
+      });
+    </script>
+  </ui:define>
+
+  <ui:define name="footer-title" />
+</ui:composition>
